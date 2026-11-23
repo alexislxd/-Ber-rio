@@ -232,6 +232,12 @@ document.getElementById('nx').onclick=function(){go(cur()+1)};
 document.querySelectorAll('a[href="#oferta"]').forEach(function(a){a.addEventListener('click',function(e){e.preventDefault();var t=document.getElementById('oferta');if(t){t.scrollIntoView({behavior:matchMedia('(prefers-reduced-motion:reduce)').matches?'auto':'smooth',block:'start'})}})});
 </script>
 <script>
-document.querySelectorAll('a[href^="https://pay.wiapy.com"]').forEach(function(a){a.addEventListener('click',function(){if(window.fbq)fbq('track','InitiateCheckout')})});
+var icSent=false;
+document.querySelectorAll('a[href^="https://pay.wiapy.com"]').forEach(function(a){a.addEventListener('click',function(){
+if(icSent)return;
+try{if(sessionStorage.getItem('ic_sent'))return;sessionStorage.setItem('ic_sent','1')}catch(e){}
+icSent=true;
+if(window.fbq)fbq('track','InitiateCheckout');
+})});
 </script>
 </body></html>
